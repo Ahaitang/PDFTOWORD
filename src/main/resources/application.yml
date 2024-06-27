@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=literature;
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: 123456
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  data:
+    redis:
+      host: 127.0.0.1
+      #      host: 192.168.75.200
+      port: 6379
+#      password: 123321
+#Mybatis配置
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    map-underscore-to-camel-case: true
+
+server:
+  port: 8081

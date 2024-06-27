@@ -1,0 +1,43 @@
+public class PdfController {
+@GetMapping()
+public static String Pdf() {
+try {
+// 指定 PDF 文件的路径
+String pdfFilePath = "E:\\CODE\\Java\\IDEA\\PdfTest\\src\\main\\resources\\pdf\\HADOOP 思考题.pdf";
+
+// 指定 Word 文档的保存路径
+String wordFilePath = "E:\\CODE\\Java\\IDEA\\PdfTest\\src\\main\\resources\\word\\HADOOP 思考题.docx";
+
+// 打开PDF文档
+File pdfFile = new File(pdfFilePath);
+PDDocument pdfDocument = PDDocument.load(pdfFile);
+
+// 创建Word文档
+XWPFDocument wordDocument = new XWPFDocument();
+
+// 遍历PDF文档的页面,并将内容添加到Word文档中
+for (int pageNumber = 0; pageNumber < pdfDocument.getNumberOfPages(); pageNumber++) {
+PDFTextStripper textStripper = new PDFTextStripper();
+textStripper.setStartPage(pageNumber + 1);
+textStripper.setEndPage(pageNumber + 1);
+String pageText = textStripper.getText(pdfDocument);
+XWPFParagraph paragraph = wordDocument.createParagraph();
+XWPFRun run = paragraph.createRun();
+run.setText(pageText);
+}
+
+// 保存Word文档
+FileOutputStream out = new FileOutputStream(wordFilePath);
+wordDocument.write(out);
+out.close();
+// 关闭PDF文档
+pdfDocument.close();
+
+System.out.println("PDF to Word conversion completed successfully!");
+} catch (IOException e) {
+e.printStackTrace();
+return "400";
+}
+return "200";
+}
+}
